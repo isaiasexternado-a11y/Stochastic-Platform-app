@@ -371,16 +371,17 @@ def _pl(title="", h=360):
 # ═══════════════════════════════════════════════════════
 @st.cache_data(show_spinner=False)
 def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
+    import pandas_datareader as pdr
+    from datetime import datetime, timedelta
     datos = {}
+    end   = datetime.today()
+    start = end - timedelta(days=730)
     for t in tickers:
         try:
-            ticker_obj = yf.Ticker(t)
-            df = ticker_obj.history(period=periodo, auto_adjust=True)
+            df = pdr.get_data_stooq(t, start=start, end=end)
+            df = df[["Close"]].sort_index().dropna()
+            df.index = pd.to_datetime(df.index)
             if len(df) > 50:
-                if isinstance(df.columns, pd.MultiIndex):
-                    df.columns = df.columns.get_level_values(0)
-                df = df[["Close"]].dropna()
-                df.index = pd.to_datetime(df.index)
                 datos[t] = df
         except Exception:
             pass
