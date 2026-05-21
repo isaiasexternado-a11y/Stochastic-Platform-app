@@ -395,6 +395,11 @@ def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
         except Exception:
             pass
     return datos
+
+def calcular_retornos(precios: pd.DataFrame) -> pd.Series:
+    close = precios["Close"].squeeze()
+    return np.log(close / close.shift(1)).dropna()
+
 # MODELO 1 — GBM
 # ═══════════════════════════════════════════════════════
 def estimar_gbm(retornos):
