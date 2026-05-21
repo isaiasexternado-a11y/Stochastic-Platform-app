@@ -371,20 +371,11 @@ def _pl(title="", h=360):
 # ═══════════════════════════════════════════════════════
 @st.cache_data(show_spinner=False)
 def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
-    import requests
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-    })
     datos = {}
     for t in tickers:
         try:
-            df = yf.download(
-                t, period=periodo,
-                auto_adjust=True,
-                progress=False,
-                session=session
-            )
+            ticker_obj = yf.Ticker(t)
+            df = ticker_obj.history(period=periodo, auto_adjust=True)
             if len(df) > 50:
                 if isinstance(df.columns, pd.MultiIndex):
                     df.columns = df.columns.get_level_values(0)
