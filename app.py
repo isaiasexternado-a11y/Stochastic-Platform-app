@@ -877,10 +877,9 @@ with st.expander("▼  RETORNOS LOGARÍTMICOS DIARIOS"):
     cols = st.columns(len(tickers_ok))
     for i, t in enumerate(tickers_ok):
         with cols[i]:
-            st.plotly_chart(fig_retornos(calcular_retornos(datos[t]), t),
+            ret = calcular_retornos(datos[t])
+            st.plotly_chart(fig_retornos(ret, t),
                             use_container_width=True)
-
-
 # ═══════════════════════════════════════════════════════
 # SECCIÓN 2: BACKTESTING
 # ═══════════════════════════════════════════════════════
