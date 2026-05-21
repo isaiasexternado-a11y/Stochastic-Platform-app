@@ -991,8 +991,8 @@ for i, proy in enumerate(resultados_proy):
         st.metric("Rango sup. (P95)", f"${proy['p95']:.2f}")
 
 st.markdown("<br>", unsafe_allow_html=True)
-for proy in resultados_proy:
-    st.plotly_chart(fig_proyeccion(proy, proy["ticker"]), use_container_width=True)
+#for proy in resultados_proy:
+#    st.plotly_chart(fig_proyeccion(proy, proy["ticker"]), use_container_width=True)
 
 filas_proy = []
 for proy in resultados_proy:
