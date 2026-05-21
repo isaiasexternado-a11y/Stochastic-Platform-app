@@ -994,19 +994,19 @@ st.markdown("<br>", unsafe_allow_html=True)
 #for proy in resultados_proy:
 #    st.plotly_chart(fig_proyeccion(proy, proy["ticker"]), use_container_width=True)
 
-filas_proy = []
-for proy in resultados_proy:
-    t = proy["ticker"]
-    filas_proy.append({
-        "Acción":              t,
-        "Modelo":              proy["ganador"],
-        "Precio actual":       f"${proy['S0']:.2f}",
-        "P5% (mín esperado)":  f"${proy['p5']:.2f}",
-        "P50% (esperado)":     f"${proy['p50']:.2f}",
-        "P95% (máx esperado)": f"${proy['p95']:.2f}",
-        "Var. esperada":       f"{(proy['p50']-proy['S0'])/proy['S0']*100:+.1f}%",
-    })
-st.dataframe(pd.DataFrame(filas_proy), use_container_width=True, hide_index=True)
+#filas_proy = []
+#for proy in resultados_proy:
+#    t = proy["ticker"]
+#    filas_proy.append({
+#        "Acción":              t,
+#        "Modelo":              proy["ganador"],
+#        "Precio actual":       f"${proy['S0']:.2f}",
+#        "P5% (mín esperado)":  f"${proy['p5']:.2f}",
+#        "P50% (esperado)":     f"${proy['p50']:.2f}",
+#        "P95% (máx esperado)": f"${proy['p95']:.2f}",
+#        "Var. esperada":       f"{(proy['p50']-proy['S0'])/proy['S0']*100:+.1f}%",
+#    })
+#st.dataframe(pd.DataFrame(filas_proy), use_container_width=True, hide_index=True)
 
 
 # ═══════════════════════════════════════════════════════
