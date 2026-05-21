@@ -371,23 +371,30 @@ def _pl(title="", h=360):
 # ═══════════════════════════════════════════════════════
 @st.cache_data(show_spinner=False)
 def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
-    import pandas_datareader as pdr
-    from datetime import datetime, timedelta
+    import yfinance as yf
+    yf.set_tz_cache_location("/tmp/yfinance_cache")
     datos = {}
-    end   = datetime.today()
-    start = end - timedelta(days=730)
     for t in tickers:
         try:
-            df = pdr.get_data_stooq(t, start=start, end=end)
-            df = df[["Close"]].sort_index().dropna()
-            df.index = pd.to_datetime(df.index)
+            tk = yf.Ticker(t)
+            df = tk.history(period=periodo, auto_adjust=True)
+            if df.empty:
+                # segundo intento con download
+                df = yf.download(
+                    t, period=periodo,
+                    auto_adjust=True,
+                    progress=False,
+                    repair=True
+                )
             if len(df) > 50:
+                if isinstance(df.columns, pd.MultiIndex):
+                    df.columns = df.columns.get_level_values(0)
+                df = df[["Close"]].dropna()
+                df.index = pd.to_datetime(df.index)
                 datos[t] = df
         except Exception:
             pass
-    return datos
-
-# ═══════════════════════════════════════════════════════
+    return datos═════════════════════════════════════
 # MODELO 1 — GBM
 # ═══════════════════════════════════════════════════════
 def estimar_gbm(retornos):
