@@ -546,7 +546,7 @@ def fig_precios_historicos(datos, tickers):
             x=df.index, y=df["Close"].squeeze(), name=t,
             line=dict(color=col, width=1.5),
             fill="tozeroy", fillcolor=fc,
-            hovertemplate=f"<b>{t}</b><br>%{{x|%d %b %Y}}<br><b>${{y:.2f}}</b><extra></extra>",
+            hovertemplate=f"<b>{t}</b><br>%{{x|%d %b %Y}}<br><b>$%{{y:.2f}}</b><extra></extra>",
         ))
     L = _pl("Precio histórico de cierre — 2 años", 420)
     L["xaxis"]["showgrid"] = False
