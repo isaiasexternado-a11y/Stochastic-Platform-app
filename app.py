@@ -371,7 +371,7 @@ def _pl(title="", h=360):
 # ═══════════════════════════════════════════════════════
 @st.cache_data(show_spinner=False)
 def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
-    import yfinance as yf
+    import time
     yf.set_tz_cache_location("/tmp/yfinance_cache")
     datos = {}
     for t in tickers:
@@ -379,7 +379,6 @@ def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
             tk = yf.Ticker(t)
             df = tk.history(period=periodo, auto_adjust=True)
             if df.empty:
-                # segundo intento con download
                 df = yf.download(
                     t, period=periodo,
                     auto_adjust=True,
@@ -394,6 +393,7 @@ def descargar_datos(tickers: list, periodo: str = "2y") -> dict:
                 datos[t] = df
         except Exception:
             pass
+        time.sleep(1)  # pausa entre tickers
     return datos
 
 def calcular_retornos(precios: pd.DataFrame) -> pd.Series:
