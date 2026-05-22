@@ -1089,26 +1089,7 @@ st.markdown(ip_html(
     "ganador de cada acción."
 ), unsafe_allow_html=True)
 
-with st.expander("▼  FÓRMULAS Y SUPUESTOS DEL ÁRBOL CRR"):
-    st.markdown(r"""
-**Parámetros Cox-Ross-Rubinstein:**
 
-| Símbolo | Fórmula | Descripción |
-|---------|---------|-------------|
-| u | $e^{\,\sigma_p \sqrt{\Delta t}}$ | Factor de subida mensual |
-| d | $1/u$ | Factor de bajada mensual |
-| $\hat{p}$ | $(e^{r_f \Delta t} - d)\,/\,(u - d)$ | Probabilidad risk-neutral |
-
-**Decisión en cada nodo** — máximo de tres opciones:
-
-| Opción | Valor | Se activa cuando |
-|--------|-------|-----------------|
-| **Expandir** | $1.5 \times V_{actual} - \$50{,}000$ | $V > \$100{,}000$ |
-| **Continuar** | $e^{-r\Delta t}[\hat{p}\cdot V_{\uparrow} + (1-\hat{p})\cdot V_{\downarrow}]$ | Siempre disponible |
-| **Abandonar** | $V_{actual} \times 0.92$ | $0.92 \cdot V > V_{continuar}$ |
-
-**ENPV = NPV pasivo + Prima de opciones** — la prima cuantifica el valor monetario de la flexibilidad estratégica.
-""")
 
 # ── Cálculo ────────────────────────────────────────────
 pesos_dict         = rec["pesos"]
@@ -1157,31 +1138,7 @@ with col_c:
 st.markdown(sub_h("ÁRBOL DE DECISIONES ÓPTIMAS"), unsafe_allow_html=True)
 st.plotly_chart(_fig_arbol_opciones(A_op, V_opc, D_opc), use_container_width=True)
 
-# ── Escenarios terminales ──────────────────────────────
-st.markdown(sub_h("ESCENARIOS TERMINALES — MES 4"), unsafe_allow_html=True)
-filas_term = []
-for j in range(N_PER_OP + 1):
-    Vt  = A_op[N_PER_OP, j]
-    dec = D_opc[N_PER_OP, j]
-    ret = (Vt - CAP_BASE) / CAP_BASE
-    if dec == "Expandir":
-        vf   = 1.5 * Vt - CAP_EXP
-        nota = f"Escala a ${1.5*Vt/1e3:.1f}k − $50k inversión"
-    elif dec == "Abandonar":
-        vf   = Vt * SALVAGE
-        nota = f"Recuperar ${vf/1e3:.1f}k (8% costo transacción)"
-    else:
-        vf   = Vt
-        nota = "Mantener posición"
-    filas_term.append({
-        "Subidas":           j,
-        "V portafolio":      f"${Vt:,.0f}",
-        "Retorno acumulado": f"{ret:+.1%}",
-        "Decisión óptima":   dec,
-        "Valor final neto":  f"${vf:,.0f}",
-        "Nota":              nota,
-    })
-st.dataframe(pd.DataFrame(filas_term), use_container_width=True, hide_index=True)
+
 
 # ── Reglas de decisión ─────────────────────────────────
 st.markdown(sub_h("REGLAS DE ACCIÓN POR MES"), unsafe_allow_html=True)
