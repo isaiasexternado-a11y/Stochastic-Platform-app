@@ -840,7 +840,7 @@ st.markdown("""
 <div class="banner">
     <span class="b-live">● LIVE</span>
     <div class="b-code">MESA DE DINERO · TERMINAL DE RIESGO CUANTITATIVO · v2.0</div>
-    <h1>La Mesa de Bolivar</h1>
+    <h1>Parche Analytics</h1>
     <div class="b-sub">Isaias Cespedes Novoa · Nicolas Figueroa </div>
     <div class="b-tag">El futuro no se predice, se simula — y se decide con opciones reales.</div>
 </div>
