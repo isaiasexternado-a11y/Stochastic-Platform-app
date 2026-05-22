@@ -841,7 +841,7 @@ st.markdown("""
     <span class="b-live">● LIVE</span>
     <div class="b-code">MESA DE DINERO · TERMINAL DE RIESGO CUANTITATIVO · v2.0</div>
     <h1>Proyecto de Simulación Financiera</h1>
-    <div class="b-sub">GBM · Heston · Merton Jump-Diffusion · Opciones Reales · Árbol Binomial CRR</div>
+    <div class="b-sub">Isaias Cespedes Novoa · Nicolas Figueroa </div>
     <div class="b-tag">El futuro no se predice, se simula — y se decide con opciones reales.</div>
 </div>
 """, unsafe_allow_html=True)
